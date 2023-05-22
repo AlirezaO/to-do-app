@@ -1,6 +1,16 @@
-.to-do-image{
-
-    width: 100px; /* Set the desired width */
-    height: 100px; /* Preserve the aspect ratio */
-
-}
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .image-container {
+    margin-right: 20px;
+  }
+  
+  .to-do-image {
+    width: 600px;
+    height: auto;
+  }
+  

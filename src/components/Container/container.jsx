@@ -9,3 +9,5 @@ const ContainerComp = () => {
         </div>
     )
 }
+
+export default ContainerComp

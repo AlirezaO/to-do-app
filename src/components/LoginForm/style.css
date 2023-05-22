@@ -1,7 +1,8 @@
+
 .center {
-    display: flex;
-    justify-content: center; /* horizontal center */
-    align-items: center; /* vertical center */
-    height: 100vh;/* make the div fill the entire viewport height */
-  }
-  
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center; /* vertical center */
+  height: 100vh;/* make the div fill the entire viewport height*/  
+} 
+

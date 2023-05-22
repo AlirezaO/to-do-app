@@ -1,5 +1,7 @@
 import React from 'react';
-import TextInput from '../TextInput/textInput';
+import TextInput from '../Input/TextInput/textInput';
+import PasswordInput from '../Input/Password/password';
+import CustomizedInputs from '../Input/Customized/customized';
 
 const LoginComponent = () => {
 
@@ -14,6 +16,8 @@ const LoginComponent = () => {
             <form onSubmit={(e) => handleFormSubmit(e)}>
 
                 <TextInput label="Email"/>
+                <PasswordInput label="Password"/>
+                {/* <CustomizedInputs label='custome'/> */}
 
             </form>
         </div>

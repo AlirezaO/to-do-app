@@ -1,0 +1,21 @@
+.custom-input label.Mui-focused {
+    color: green;
+  }
+  
+  .custom-input .MuiInput-underline:after {
+    border-bottom-color: green;
+  }
+  
+  .custom-input .MuiOutlinedInput-root {
+    & fieldset {
+      border-color: red;
+    }
+  
+    &:hover fieldset {
+      border-color: yellow;
+    }
+  
+    &.Mui-focused fieldset {
+      border-color: green;
+    }
+  }
