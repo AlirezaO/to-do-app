@@ -1,7 +1,7 @@
 import React from 'react';
 import TextInput from '../Input/TextInput/textInput';
 import PasswordInput from '../Input/Password/password';
-import CustomizedInputs from '../Input/Customized/customized';
+// import CustomizedInputs from '../Input/Customized/customized';
 
 const LoginComponent = () => {
 

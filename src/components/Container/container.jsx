@@ -1,11 +1,10 @@
 import React from "react";
+import ToDoList from "../List/list";
 
 const ContainerComp = () => {
     return(
         <div>
-            <form action="">
-                
-            </form>
+            <ToDoList/>
         </div>
     )
 }
