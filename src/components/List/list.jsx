@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,7 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import './style.css'
-
+import { Tasks } from '../../utils/Tasks';
+// import ListItems from '../ListItem/listItem';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,39 +44,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 //   createData('Gingerbread', 356, 16.0, 49, 3.9),
 // ];
 
-function createData(Task, Deadline) {
-    return { Task, Deadline };
-  }
+// function createData(Task, Deadline) {
+//     return { Task, Deadline };
+//   }
   
-  const rows = [
-    createData('Frozen yoghurt', 159),
-    createData('Ice cream sandwich', 237),
-    createData('Eclair', 262),
-    createData('Cupcake', 305),
-    createData('Gingerbread', 356),
-  ];
 
-export default function ToDoList() {
+export default function ToDoList({update}) {
+
+  const [listData, setListData] = useState(Tasks); // Initial state with data.list1
+
+  useEffect(() => {
+    setListData(Tasks);
+  }, [update]);
+
+
   return (
     <div className="to-do-list">
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
             <TableHead>
             <TableRow>
-                <StyledTableCell>Task</StyledTableCell>
-                <StyledTableCell align="right">Deadline</StyledTableCell>
+                <StyledTableCell>Tasks</StyledTableCell>
+                  <StyledTableCell >Deadline</StyledTableCell>
+               
             </TableRow>
             </TableHead>
             <TableBody>
-            {rows.map((row) => (
-                <StyledTableRow key={row.Task}>
-                <StyledTableCell component="th" scope="row">
-                    {row.Task}
-                </StyledTableCell>
+            {listData.map((task) => (
+                <StyledTableRow key={task[0]}>
+                  
+                  <StyledTableCell component="th" scope="row">
+                      {task[0]}
+                  </StyledTableCell>
 
-                <div className='deadline-rows'>
-                    <StyledTableCell  align="right">{row.Deadline}</StyledTableCell>
-                </div>
+                  <div className='deadline-rows'>
+                      <StyledTableCell >{task[1]}</StyledTableCell>
+                  </div>
+
+    
                 </StyledTableRow>
             ))}
             </TableBody>

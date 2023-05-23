@@ -2,10 +2,8 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Input from '@mui/material/Input';
 
-
-const CssTextField = styled(Input)({
+const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
     color: 'green',
   },
@@ -25,18 +23,18 @@ const CssTextField = styled(Input)({
   },
 });
 
-export default function CustomizedInputs({label, type, endAdornment, id}) {
+export default function CustomizedInputs() {
   return (
     <Box
       component="form"
       noValidate
       sx={{
         display: 'grid',
-        gridTemplateColumns: { },
+        gridTemplateColumns: { sm: '1fr 1fr' },
         gap: 2,
       }}
     >
-      <CssTextField endAdornment={endAdornment} type={type} variant='standard' label={label} id={id} />
+      <CssTextField label="Custom CSS" id="custom-css-outlined-input" />
     </Box>
   );
 }
