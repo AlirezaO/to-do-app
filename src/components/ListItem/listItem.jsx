@@ -1,38 +1,69 @@
-import * as React from 'react';
+import { useSortable } from "@dnd-kit/sortable";
+import {CSS} from "@dnd-kit/utilities";
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-
-import ListItemText from '@mui/material/ListItemText';
+import TableRow from '@mui/material/TableRow';
 
 
 
-const Demo = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
+
+
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#6C63FF",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
 }));
 
-const ListItems = () => {
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: "#e2eafc"
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 
-  return (
-    <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
- 
-            <Demo>
-                <List dense={true}>
+export function SortableItem(props) {
+    // props.id
+    // JavaScript
 
-                    <ListItem>
-                    <ListItemText
-                        primary="Single-line item"
-                        secondary='Secondary text'
-                    />
-                    </ListItem>
-                 </List>
-            </Demo>
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition
+    } = useSortable({id: props.id});
 
-    </Box>
-  );
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        display: "flex"
+    }
+
+    return (
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+          <StyledTableRow key={props.task[0]}>
+                    
+              <StyledTableCell component="th" scope="row">
+                  {props.task[0]}
+              </StyledTableCell>
+
+              <div className='deadline-rows'>
+                  <StyledTableCell >{props.task[1]}</StyledTableCell>
+              </div>
+
+
+            </StyledTableRow>
+        </div>
+    );
+
+   
 }
-
-
-export default ListItems;
