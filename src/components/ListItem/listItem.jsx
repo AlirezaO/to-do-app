@@ -57,7 +57,9 @@ export function SortableItem(props) {
               </StyledTableCell>
 
               <div className='deadline-rows'>
-                  <StyledTableCell >{props.task[1]}</StyledTableCell>
+                  <StyledTableCell >
+                    {props.task[1]}
+                  </StyledTableCell>
               </div>
 
 

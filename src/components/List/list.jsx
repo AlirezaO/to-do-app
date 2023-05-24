@@ -66,39 +66,43 @@ export default function ToDoList({update}) {
       onDragEnd={handleDragEnd}
       >
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
-            <TableHead>
-            <TableRow>
+          <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
 
-                <StyledTableCell>Tasks</StyledTableCell>
-                <StyledTableCell align="right">Deadline</StyledTableCell>
-              
-            </TableRow>
-            </TableHead>
-            <SortableContext
-              items={listData}
-              strategy={verticalListSortingStrategy}
-            >
-              <TableBody>
-              {listData.map((task) => (
-                
-                
-                  <StyledTableRow key={task[0]}>
-                    
-                    <StyledTableCell component="th" scope="row">
-                        {task[0]}
-                    </StyledTableCell>
 
-                    <div className='deadline-rows'>
-                        <StyledTableCell >{task[1]}</StyledTableCell>
-                    </div>
+              <TableHead>
+                <TableRow>
 
-      
-                  </StyledTableRow>
-              ))}
-              </TableBody>
-            </SortableContext>
-        </Table>
+                    <StyledTableCell>Tasks</StyledTableCell>
+                    <StyledTableCell align="right">Deadline</StyledTableCell>
+                  
+                </TableRow>
+              </TableHead>
+
+
+              <SortableContext
+                items={listData}
+                strategy={verticalListSortingStrategy}
+              >
+                <TableBody>
+                {listData.map((task) => (
+                  
+                  // <SortableItem key={task[0]} id={task[0]} task={task}/>
+                    <StyledTableRow key={task[0]}>
+                      
+                      <StyledTableCell component="th" scope="row">
+                          {task[0]}
+                      </StyledTableCell>
+
+                      <div className='deadline-rows'>
+                          <StyledTableCell >{task[1]}</StyledTableCell>
+                      </div>
+
+        
+                    </StyledTableRow>
+                ))}
+                </TableBody>
+              </SortableContext>
+          </Table>
         </TableContainer>
       </DndContext>
     </div>
@@ -116,8 +120,6 @@ export default function ToDoList({update}) {
         const overIndex = items.indexOf(over.id);
         console.log(arrayMove(items, activeIndex, overIndex));
         return arrayMove(items, activeIndex, overIndex);
-        // items: [2, 3, 1]   0  -> 2
-        // [1, 2, 3] oldIndex: 0 newIndex: 2  -> [2, 3, 1] 
       });
       
     }
