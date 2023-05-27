@@ -66,8 +66,8 @@ function Test({update}) {
         let data =response.data
         data.map((item) => {
           
-          task.push(item[0]);
-          deadline.push(item[1]);
+          task.push(item.task);
+          deadline.push(item.deadline);
         })
         //console.log("this: ", data)
 
