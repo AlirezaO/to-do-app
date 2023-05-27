@@ -44,11 +44,27 @@ function Test({update}) {
       // const [listData, setListData] = useState(task);
 
   useEffect(() => {
-    axios
-      .get('https://my-json-server.typicode.com/AlirezaO/to-do-app/db')
+
+    //TO USE THE GIT HUB SERVER:
+    // axios
+    //   .get('https://my-json-server.typicode.com/AlirezaO/to-do-app/db')
+    //   .then((response) => {
+    //     let data =response.data
+    //     data.tasks.map((item) => {
+          
+    //       task.push(item[0]);
+    //       deadline.push(item[1]);
+    //     })
+
+    //     setLanguages(task);
+    //   })
+    //   .catch((error) => console.log(error))
+    
+      axios
+      .get('http://localhost:3001/tasks')
       .then((response) => {
         let data =response.data
-        data.tasks.map((item) => {
+        data.map((item) => {
           
           task.push(item[0]);
           deadline.push(item[1]);
@@ -58,8 +74,7 @@ function Test({update}) {
         setLanguages(task);
       })
       .catch((error) => console.log(error))
-    // setListData(task);
-    
+
   }, [update]);
 
 

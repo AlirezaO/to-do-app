@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const addArrayToEnd = (array) => {
-  axios.post('https://my-json-server.typicode.com/AlirezaO/to-do-app/db', {
+  axios.post('http://localhost:3001/tasks', {
     tasks: [...array]
   })
     .then(response => {

@@ -1,24 +1,24 @@
 {
-    "tasks": [
-      [
-      "First",
-      159
-      ],
-      [
-        "Ice cream sandwich",
-        237
-      ],
-      [
-        "Eclair",
-        262
-      ],
-      [
-        "Cupcake",
-        305
-      ],
-      [
-        "Gingerbread",
-        356
-      ]
+  "tasks": [
+    {
+      "task": "First",
+      "deadline": 159
+    },
+    {
+      "task": "Ice cream sandwich",
+      "deadline": 237
+    },
+    {
+      "task": "Eclair",
+      "deadline": 262
+    },
+    {
+      "task": "Cupcake",
+      "deadline": 305
+    },
+    {
+      "task":"Gingerbread",
+      "deadline": 356
+    }
   ]
 }
