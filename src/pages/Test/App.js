@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from 'react-bootstrap/Container';
+import React,{useEffect} from 'react';
 import {
   DndContext,
   closestCenter
@@ -19,7 +19,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-
+import { Tasks } from '../../utils/Tasks';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -31,23 +31,31 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
-function Test() {
-  const [languages, setLanguages ] = useState(["JavaScript", "Python", "TypeScript"]);
+function Test({update}) {
+  //let Tasks = ["JavaScript", "Python", "TypeScript"]
+  const [languages, setLanguages ] = useState(Tasks);
+  const [listData, setListData] = useState(Tasks);
+
+  useEffect(() => {
+    setListData(Tasks);
+    setLanguages(Tasks);
+  }, [update]);
+
 
   return (
     <DndContext
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-        <div style={{maxWidth:"700px"}}>
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
+        <div >
+        <TableContainer sx={{marginTop:"30px"}} component={Paper}>
+            <Table sx={{ minWidth: "700px" }} stickyHeader aria-label="sticky table">
 
                 <TableHead>
                     <TableRow>
 
                         <StyledTableCell>Tasks</StyledTableCell>
-                        <StyledTableCell align="right">Deadline</StyledTableCell>
+                        <StyledTableCell >Deadline</StyledTableCell>
                     
                     </TableRow>
                 </TableHead>
@@ -55,13 +63,14 @@ function Test() {
                 <SortableContext
                 items={languages}
                 strategy={verticalListSortingStrategy}
+                
                 >
                 
                     <TableBody>
 
                         {languages.map(language => 
                         
-                            <SortableItem key={language} id={language}/>
+                            <SortableItem key={language} id={language} data={language[0]}/>
                         
                         )}
                     </TableBody>
