@@ -6,9 +6,12 @@ import { Tasks } from "../../utils/Tasks";
 import Test from "../../pages/Test/App";
 // import data from '../../utils/tasks.json'
 import getData from "../../api/getAPI";
+import addArrayToEnd from "../../api/postAPI";
 
 const ContainerComp = () => {
 
+    const newArray = ["lastone", 123];
+    addArrayToEnd(newArray);
 
     const [load, reLoad] = useState(false)
     const onClick = () =>{
