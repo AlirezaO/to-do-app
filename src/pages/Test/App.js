@@ -20,6 +20,9 @@ import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import { Tasks } from '../../utils/Tasks';
+import getData from '../../api/getAPI';
+import axios from "axios"
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -35,6 +38,25 @@ function Test({update}) {
   //let Tasks = ["JavaScript", "Python", "TypeScript"]
   const [languages, setLanguages ] = useState(Tasks);
   const [listData, setListData] = useState(Tasks);
+
+
+  let task = []
+  let deadline = []
+  // console.log(getData())
+  axios
+      .get('https://my-json-server.typicode.com/AlirezaO/to-do-app/db')
+      .then((response) => {
+        let data =response.data
+        data.tasks.map((item, index) => {
+
+          task.push(item[0]);
+          deadline.push(item[1]);
+        })
+      })
+      .catch((error) => console.log(error))
+
+
+
 
   useEffect(() => {
     setListData(Tasks);

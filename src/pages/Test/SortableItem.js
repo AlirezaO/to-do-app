@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import TableRow from '@mui/material/TableRow';
 import './style.css'
 import { Card } from "react-bootstrap";
+
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#6C63FF",
