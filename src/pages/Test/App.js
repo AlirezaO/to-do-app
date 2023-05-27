@@ -36,31 +36,30 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function Test({update}) {
   //let Tasks = ["JavaScript", "Python", "TypeScript"]
-  const [languages, setLanguages ] = useState(Tasks);
-  const [listData, setListData] = useState(Tasks);
-
-
+  
   let task = []
   let deadline = []
-  // console.log(getData())
-  axios
+
+      const [languages, setLanguages ] = useState([]);
+      // const [listData, setListData] = useState(task);
+
+  useEffect(() => {
+    axios
       .get('https://my-json-server.typicode.com/AlirezaO/to-do-app/db')
       .then((response) => {
         let data =response.data
-        data.tasks.map((item, index) => {
-
+        data.tasks.map((item) => {
+          
           task.push(item[0]);
           deadline.push(item[1]);
         })
+        //console.log("this: ", data)
+
+        setLanguages(task);
       })
       .catch((error) => console.log(error))
-
-
-
-
-  useEffect(() => {
-    setListData(Tasks);
-    setLanguages(Tasks);
+    // setListData(task);
+    
   }, [update]);
 
 
@@ -92,7 +91,7 @@ function Test({update}) {
 
                         {languages.map(language => 
                         
-                            <SortableItem key={language} id={language} data={language[0]}/>
+                            <SortableItem key={language} id={language} data={language}/>
                         
                         )}
                     </TableBody>

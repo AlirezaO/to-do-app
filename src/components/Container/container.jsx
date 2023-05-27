@@ -15,7 +15,7 @@ const ContainerComp = () => {
         Tasks.push(["a",1]);
 
         reLoad(!load);
-        console.log(Tasks)
+        //console.log(Tasks)
     }
 
     return(
