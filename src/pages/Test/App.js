@@ -66,10 +66,10 @@ function Test({update}) {
         let data =response.data
         data.map((item) => {
           
-          task.push(item.task);
-          deadline.push(item.deadline);
+          task.push(item.array.task);
+          deadline.push(item.array.deadline);
         })
-        //console.log("this: ", data)
+        console.log("this: ", data)
 
         setLanguages(task);
       })

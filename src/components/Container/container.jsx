@@ -10,12 +10,17 @@ import addArrayToEnd from "../../api/postAPI";
 
 const ContainerComp = () => {
 
-    const newArray = ["lastone", 123];
-    addArrayToEnd(newArray);
+    let newTask = {
+        "task": "new", 
+        "deadline": 123
+    };
+    
 
+    
     const [load, reLoad] = useState(false)
     const onClick = () =>{
-        Tasks.push(["a",1]);
+        // Tasks.push(["a",1]);
+        addArrayToEnd(newTask);
 
         reLoad(!load);
         //console.log(Tasks)
