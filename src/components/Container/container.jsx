@@ -20,7 +20,7 @@ const ContainerComp = () => {
     const [load, reLoad] = useState(false)
     const onClick = () =>{
         // Tasks.push(["a",1]);
-        addArrayToEnd(newTask);
+        addArrayToEnd(newTask, "append");
 
         reLoad(!load);
         //console.log(Tasks)

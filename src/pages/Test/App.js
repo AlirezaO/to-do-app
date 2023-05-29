@@ -61,7 +61,7 @@ function Test({update}) {
     //   .catch((error) => console.log(error))
     
       axios
-      .get('http://localhost:3001/tasks')
+      .get('http://localhost:3002/tasks')
       .then((response) => {
         let data =response.data
         data.map((item) => {
@@ -134,7 +134,7 @@ function Test({update}) {
         // items: [2, 3, 1]   0  -> 2
         // [1, 2, 3] oldIndex: 0 newIndex: 2  -> [2, 3, 1] 
       });
-      
+      console.log(languages)
     }
   }
 }
