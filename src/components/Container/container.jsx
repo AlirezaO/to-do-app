@@ -7,6 +7,7 @@ import Test from "../../pages/Test/App";
 // import data from '../../utils/tasks.json'
 import getData from "../../api/getAPI";
 import addArrayToEnd from "../../api/postAPI";
+import FormDialog from "../Dialog/dialog";
 
 const ContainerComp = () => {
 
@@ -14,16 +15,22 @@ const ContainerComp = () => {
         "task": "new", 
         "deadline": 123
     };
-    
 
     
     const [load, reLoad] = useState(false)
+    const [dialog, setDialog] = useState(false)
+
+    console.log("Dialog is: ", dialog)
     const onClick = () =>{
         // Tasks.push(["a",1]);
-        addArrayToEnd(newTask, "append");
+        console.log("here!")
 
-        reLoad(!load);
+        setDialog(!dialog)
+        // addArrayToEnd(newTask, "append");
+
+        reLoad(!load); //THIS SHOULD HAPPEN INSIDE OF THE DIALOG SO WHEN THE DIALOG IS SUBMITTED THEN THE PAGE SHOULD REFRESH!
         //console.log(Tasks)
+        
     }
 
     return(
@@ -34,6 +41,7 @@ const ContainerComp = () => {
             </div>
             <div className="addbutt" >
                 <AddButton onClick={onClick}/>
+                <FormDialog set={dialog}/>
             </div>
         </div>
     )

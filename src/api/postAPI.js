@@ -11,10 +11,12 @@ const addArrayToEnd = async (array, func) => {
     } catch (error) {
       console.error('Error adding array:', error);
     }
-  } else if (func === 'replace'){
+  } 
+  
+  else if (func === 'replace'){
     try {
       const response = await axios.post('http://localhost:3002/tasks', {
-        tasks = array
+        array
     });
     
       console.log('POST request successful:', response.data);
