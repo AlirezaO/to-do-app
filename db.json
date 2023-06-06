@@ -65,8 +65,8 @@
     },
     {
       "array": {
-        "task": "new",
-        "deadline": 123
+        "task": "",
+        "deadline": ""
       },
       "id": 9
     }
