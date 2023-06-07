@@ -7,24 +7,32 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextInput from '../Input/TextInput/textInput';
 import addArrayToEnd from "../../api/postAPI";
 import useInput from "../../hooks/useInput";
+import TextField from '@mui/material/TextField';
+
 
 export default function FormDialog({set}) {
   const [open, setOpen] = useState(set);
+  const [task, setTask] = useState('');
+  const [deadline, setDeadline] = useState('');
+
   console.log("Set is :",set)
   console.log("Open is :",open)
   
 
-  const task = useInput('task', '')
-  const deadline = useInput('deadline', '')
+  const handleTaskChange = (e) => {
+    setTask(e.target.value);
+  };  
+  const handleDeadlineChange = (e) => {
+    setDeadline(e.target.value);
+  };  
 
-  const handleAdd = (e, task, deadline) => {
-    e.preventDefault();
+
+  const handleAdd = () => {
     let newTask = {
-      "task": task.value, 
-      "deadline": deadline.value
+      "task": task, 
+      "deadline": deadline
     }
-
-    console.log(newTask.task)//THIS RETURNS EMPTY!!?!?!?!!?!?!?!?!?
+    console.log("newTask: ", newTask)
     addArrayToEnd(newTask, "append");
     setOpen(false);
   };
@@ -33,12 +41,11 @@ export default function FormDialog({set}) {
     setOpen(false);
   };
 
-
   useEffect(() => {
     
     setOpen(true)
     console.log("In UseEffec open is: ", open)
-    
+
   }, [set]);
 
   return (
@@ -46,18 +53,34 @@ export default function FormDialog({set}) {
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Task</DialogTitle>
-        <form onSubmit={(e) => handleAdd(e, task, deadline)}>
           <DialogContent>
-            <TextInput label="Gotta do this..."/>
-            <TextInput label="Deadline"/>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="task"
+              label="Gotta do this..."
+              fullWidth
+              variant="standard"
+              value={task}
+              onChange={handleTaskChange}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="deadline"
+              label="Deadline"
+              fullWidth
+              variant="standard"
+              value={deadline}
+              onChange={handleDeadlineChange}
+            />
           </DialogContent>
-          <DialogActions>
+          <DialogActions> 
             <Button onClick={handleClose}>Cancel</Button>
-            <Button variant="contained" type="submit" size="large">
+            <Button onClick={handleAdd} variant="contained" type="submit" size="large">
               "Add"
             </Button>
           </DialogActions>
-        </form>
       </Dialog>
     </div>
   );

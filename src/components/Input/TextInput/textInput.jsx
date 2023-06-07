@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-export default function TextInput({label}) {
+export default function TextInput({label, id, type}) {
   return (
     <Box
       sx={{

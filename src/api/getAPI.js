@@ -6,7 +6,7 @@ export default function getData() {
       .get('https://my-json-server.typicode.com/AlirezaO/to-do-app/db')
       .then((response) => {
         let data =response.data
-        console.log(data)
+        console.log("Get Data API: ", data)
       })
       .catch((error) => console.log(error))
     

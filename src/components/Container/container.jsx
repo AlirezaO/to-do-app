@@ -7,6 +7,7 @@ import Test from "../../pages/Test/App";
 // import data from '../../utils/tasks.json'
 import getData from "../../api/getAPI";
 import FormDialog from "../Dialog/dialog";
+import { updateTasks } from "../../api/putAPI";
 
 const ContainerComp = () => {
     
@@ -14,6 +15,8 @@ const ContainerComp = () => {
     const [dialog, setDialog] = useState(false)
 
     console.log("Dialog is: ", dialog)
+
+
     const onClick = () =>{
         // Tasks.push(["a",1]);
         console.log("here!")
@@ -24,17 +27,22 @@ const ContainerComp = () => {
         //console.log(Tasks)
         
     }
+    const onClick2 = () =>{
+        updateTasks();
+        
+        console.log("Changed 3 and 6")
+    }
 
     return(
         <div>
             <div className="todo" >
-                {/* <ToDoList update = {load}/> */}
                 <Test update = {load}/>
             </div>
             <div className="addbutt" >
                 <AddButton onClick={onClick}/>
-                <FormDialog set={dialog}/>
+                <AddButton onClick={onClick2}/>
             </div>
+            <FormDialog set={dialog}/>
         </div>
     )
 }

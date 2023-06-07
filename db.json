@@ -65,10 +65,17 @@
     },
     {
       "array": {
-        "task": "",
-        "deadline": ""
+        "task": "tasknew",
+        "deadline": "1234"
       },
       "id": 9
+    },
+    {
+      "array": {
+        "task": "tasknewnew",
+        "deadline": "51251"
+      },
+      "id": 10
     }
   ]
 }
