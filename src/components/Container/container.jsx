@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import ToDoList from "../List/list";
 import AddButton from "../Button/AddButton/addButton";
 import './style.css'
@@ -11,38 +11,43 @@ import { updateTasks } from "../../api/putAPI";
 
 const ContainerComp = () => {
     
-    const [load, reLoad] = useState(false)
+    const [load, reLoad] = useState(false) 
     const [dialog, setDialog] = useState(false)
-
+    const [secondButtonClick, setSecondButtonClick] = useState(false)
     console.log("Dialog is: ", dialog)
 
+    const handleSecondButtonClick = () => {
+        setSecondButtonClick(true);
+      };
+      
 
     const onClick = () =>{
         // Tasks.push(["a",1]);
-        console.log("here!")
+        console.log("Clicked the add task button in container!")
 
         setDialog(!dialog)
 
-        reLoad(!load); //THIS SHOULD HAPPEN INSIDE OF THE DIALOG SO WHEN THE DIALOG IS SUBMITTED THEN THE PAGE SHOULD REFRESH!
         //console.log(Tasks)
         
     }
-    const onClick2 = () =>{
-        updateTasks();
+    // const onClick2 = () =>{
+    //     updateTasks();
         
-        console.log("Changed 3 and 6")
-    }
+    //     console.log("Changed 3 and 6")
+    // }
+
+
 
     return(
         <div>
             <div className="todo" >
-                <Test update = {load}/>
+                <Test update = {load} />
             </div>
             <div className="addbutt" >
                 <AddButton onClick={onClick}/>
-                <AddButton onClick={onClick2}/>
+                {/* <AddButton onClick={onClick2}/> */}
             </div>
-            <FormDialog set={dialog}/>
+            <FormDialog set={dialog} load={load} reLoad={reLoad}/>
         </div>
     )
 }

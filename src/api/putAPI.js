@@ -20,12 +20,9 @@ export const updateTasks = async () => {
             temp.task = object3.array.task
             temp.deadline = object3.array.deadline
             object3.array = object6.array
-            console.log("This is temp in put api: ", temp)
-            return object3
+            console.log("This is temp in put api: ", temp)  //TRY USING SPLICE TO REPLACE THE OBJECTS WITH EACH OTHER!!!
         } else if (task.id === 6) {
-            object6.array.task = temp.task;
-            object6.array.deadline = temp.deadline;
-            return object6
+            object6.array = temp;
         } else {
             return task;
         }
@@ -33,7 +30,7 @@ export const updateTasks = async () => {
     console.log("This is updatedtasks in put api: ", updatedTasks)
     
     // Perform the update by sending a PUT request to the JSON server
-    await axios.put('http://localhost:3002/tasks', {tasks}); // Replace the URL with your JSON server endpoint
+    await axios.put('http://localhost:3002/tasks', tasks); // Replace the URL with your JSON server endpoint
 
     console.log('Objects updated successfully!');
   } catch (error) {

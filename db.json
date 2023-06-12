@@ -34,48 +34,6 @@
         "deadline": 356
       },
       "id": 4
-    },
-    {
-      "array": {
-        "task": "lastOne",
-        "deadline": 12332
-      },
-      "id": 5
-    },
-    {
-      "array": {
-        "task": "errrrr",
-        "deadline": 431314
-      },
-      "id": 6
-    },
-    {
-      "array": {
-        "task": "new1",
-        "deadline": 123
-      },
-      "id": 7
-    },
-    {
-      "array": {
-        "task": "fd",
-        "deadline": 41
-      },
-      "id": 8
-    },
-    {
-      "array": {
-        "task": "tasknew",
-        "deadline": "1234"
-      },
-      "id": 9
-    },
-    {
-      "array": {
-        "task": "tasknewnew",
-        "deadline": "51251"
-      },
-      "id": 10
     }
   ]
 }

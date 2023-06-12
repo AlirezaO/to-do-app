@@ -10,7 +10,7 @@ import useInput from "../../hooks/useInput";
 import TextField from '@mui/material/TextField';
 
 
-export default function FormDialog({set}) {
+export default function FormDialog({set, load, reLoad}) {
   const [open, setOpen] = useState(set);
   const [task, setTask] = useState('');
   const [deadline, setDeadline] = useState('');
@@ -32,9 +32,10 @@ export default function FormDialog({set}) {
       "task": task, 
       "deadline": deadline
     }
-    console.log("newTask: ", newTask)
+    console.log("Clicked the dialog Add button and the newTask is: ", newTask)
     addArrayToEnd(newTask, "append");
     setOpen(false);
+    reLoad(!load)
   };
 
   const handleClose = () => {

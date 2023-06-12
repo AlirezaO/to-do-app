@@ -75,6 +75,8 @@ function Test({update}) {
       })
       .catch((error) => console.log(error))
 
+      console.log("In the useEffect of App.js where the list is supposed to be updated!")
+
   }, [update]);
 
 
