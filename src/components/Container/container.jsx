@@ -11,14 +11,9 @@ import { updateTasks } from "../../api/putAPI";
 
 const ContainerComp = () => {
     
-    const [load, reLoad] = useState(false) 
+    const [load, setLoad] = useState(false) 
     const [dialog, setDialog] = useState(false)
-    const [secondButtonClick, setSecondButtonClick] = useState(false)
     console.log("Dialog is: ", dialog)
-
-    const handleSecondButtonClick = () => {
-        setSecondButtonClick(true);
-      };
       
 
     const onClick = () =>{
@@ -26,6 +21,7 @@ const ContainerComp = () => {
         console.log("Clicked the add task button in container!")
 
         setDialog(!dialog)
+        // setDialog(true)
 
         //console.log(Tasks)
         
@@ -47,7 +43,8 @@ const ContainerComp = () => {
                 <AddButton onClick={onClick}/>
                 {/* <AddButton onClick={onClick2}/> */}
             </div>
-            <FormDialog set={dialog} load={load} reLoad={reLoad}/>
+            {/* {dialog && <FormDialog set={dialog} load={load} setLoad={setLoad}/>} CONSIDER DOING THIS!!!!!!!! AND THE LINE 24*/}
+            <FormDialog set={dialog} load={load} setLoad={setLoad}/>
         </div>
     )
 }
