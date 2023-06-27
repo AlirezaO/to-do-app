@@ -24,7 +24,7 @@ import getData from '../../api/getAPI';
 import axios from "axios"
 import FormDialog from '../../components/Dialog/dialog';
 import { setRef } from '@mui/material';
-
+import updateSortOrder from '../../utils/updateTaskOrders';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -69,7 +69,8 @@ function ListContainerTest2({ openDialog }) {
   }, []);
 
   useEffect(() => {
-
+    let firstArray = data
+    updateSortOrder(firstArray, taskNameList)//TEST THIS NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     console.log(taskNameList)
 
   }, [taskNameList]);
