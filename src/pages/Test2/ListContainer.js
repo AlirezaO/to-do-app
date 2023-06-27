@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   DndContext,
   closestCenter
@@ -9,7 +9,7 @@ import {
   SortableContext,
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
-import {useState} from 'react';
+import { useState } from 'react';
 import { SortableItem } from './SortableItem';
 import TableBody from '@mui/material/TableBody';
 import Table from '@mui/material/Table';
@@ -22,113 +22,124 @@ import { styled } from '@mui/material/styles';
 import { Tasks } from '../../utils/Tasks';
 import getData from '../../api/getAPI';
 import axios from "axios"
+import FormDialog from '../../components/Dialog/dialog';
+import { setRef } from '@mui/material';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#6C63FF",
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#6C63FF",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-function ListContainerTest2({update}) {
-  //let Tasks = ["JavaScript", "Python", "TypeScript"]
-  
+
+
+
+function ListContainerTest2({ openDialog }) {
+  const [data, setData] = useState([]);
+  const [taskNameList, setTaskNameList] = useState([]);
+  const [updateTasks, setUpdateTasks] = useState({})
   let task = []
   let deadline = []
-
-      const [languages, setLanguages ] = useState([]);
-      // const [listData, setListData] = useState(task);
+  // let data = null
 
   useEffect(() => {
-
-    //TO USE THE GIT HUB SERVER:
-    // axios
-    //   .get('https://my-json-server.typicode.com/AlirezaO/to-do-app/db')
-    //   .then((response) => {
-    //     let data =response.data
-    //     data.tasks.map((item) => {
-          
-    //       task.push(item[0]);
-    //       deadline.push(item[1]);
-    //     })
-
-    //     setLanguages(task);
-    //   })
-    //   .catch((error) => console.log(error))
-    
-      axios
+    axios
       .get('http://localhost:3002/tasks')
       .then((response) => {
-        let data =response.data
-        data.map((item) => {
-          
+        setData(response.data);
+        let t = response.data
+        t.map((item) => {
+
           task.push(item.array.task);
           deadline.push(item.array.deadline);
         })
-        console.log("this: ", data)
+        console.log("this: ", t[t.length - 1].id)
 
-        setLanguages(task);
+        setTaskNameList(task);
       })
       .catch((error) => console.log(error))
 
-      console.log("In the useEffect of App.js where the list is supposed to be updated!")
+    // console.log("CALLED!")
 
-  }, [update]);
+  }, []);
+
+  useEffect(() => {
+
+    console.log(taskNameList)
+
+  }, [taskNameList]);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      let lastID = data[data.length - 1].id + 1
+      setData([
+        ...data,
+        {
+          "array": {...updateTasks},
+          "id": lastID
+        }
+      ])
+      setTaskNameList([
+        ...taskNameList,
+        updateTasks.task
+      ])
+    }
+
+    console.log("NEW TASK: ", updateTasks)
+
+  }, [updateTasks])
+
+  console.log("Data is: ", data)
 
 
   return (
-    <DndContext
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
+    <>
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
         <div >
-        <TableContainer sx={{marginTop:"30px"}} component={Paper}>
+          <TableContainer sx={{ marginTop: "30px" }} component={Paper}>
             <Table sx={{ minWidth: "700px" }} stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>Tasks</StyledTableCell>
+                  <StyledTableCell>Deadline</StyledTableCell>
+                </TableRow>
+              </TableHead>
 
-                <TableHead>
-                    <TableRow>
-
-                        <StyledTableCell>Tasks</StyledTableCell>
-                        <StyledTableCell >Deadline</StyledTableCell>
-                    
-                    </TableRow>
-                </TableHead>
-
-                <SortableContext
-                items={languages}
+              <SortableContext
+                items={taskNameList}
                 strategy={verticalListSortingStrategy}
-                
-                >
-                
-                    <TableBody>
-
-                        {languages.map(language => 
-                        
-                            <SortableItem key={language} id={language} data={language}/>
-                        
-                        )}
-                    </TableBody>
-
-                </SortableContext>
+              >
+                <TableBody>
+                  {taskNameList.map(task =>
+                    <SortableItem key={task} id={task} data={task} />
+                  )}
+                </TableBody>
+              </SortableContext>
             </Table>
-        </TableContainer>
+          </TableContainer>
         </div>
+      </DndContext>
 
-    </DndContext>
+      <FormDialog openDialog={openDialog} setUpdateTasks={setUpdateTasks} />
+    </>
   );
 
   function handleDragEnd(event) {
     console.log("Drag end called");
-    const {active, over} = event;
-    console.log("ACTIVE: " + active.id);
-    console.log("OVER :" + over.id);
+    const { active, over } = event;
+    // console.log("ACTIVE: " + active.id);
+    // console.log("OVER :" + over.id);
 
-    if(active.id !== over.id) {
-      setLanguages((items) => {
+    if (active.id !== over.id) {
+      setTaskNameList((items) => {
         const activeIndex = items.indexOf(active.id);
         const overIndex = items.indexOf(over.id);
         //console.log(arrayMove(items, activeIndex, overIndex));
@@ -136,7 +147,7 @@ function ListContainerTest2({update}) {
         // items: [2, 3, 1]   0  -> 2
         // [1, 2, 3] oldIndex: 0 newIndex: 2  -> [2, 3, 1] 
       });
-      console.log(languages)
+
     }
   }
 }

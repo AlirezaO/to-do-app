@@ -34,34 +34,6 @@
         "deadline": 356
       },
       "id": 4
-    },
-    {
-      "array": {
-        "task": "sda",
-        "deadline": "213"
-      },
-      "id": 5
-    },
-    {
-      "array": {
-        "task": "1sdsad",
-        "deadline": "1"
-      },
-      "id": 6
-    },
-    {
-      "array": {
-        "task": "aaaaaaaa",
-        "deadline": "12"
-      },
-      "id": 7
-    },
-    {
-      "array": {
-        "task": "aaaaaaaa22",
-        "deadline": "12"
-      },
-      "id": 8
     }
   ]
 }

@@ -9,13 +9,13 @@ import addArrayToEnd from "../../api/postAPI";
 import useInput from "../../hooks/useInput";
 import TextField from "@mui/material/TextField";
 
-export default function FormDialog({ set, load, setLoad }) {
-  const [open, setOpen] = useState(set);
+export default function FormDialog({ openDialog, setUpdateTasks }) {
+  const [open, setOpen] = useState(openDialog);
   const [task, setTask] = useState("");
   const [deadline, setDeadline] = useState("");
 
-  console.log("Set is :", set);
-  console.log("Open is :", open);
+  // console.log("Set is :", set);
+  // console.log("Open is :", open);
 
   const handleTaskChange = (e) => {
     setTask(e.target.value);
@@ -25,14 +25,15 @@ export default function FormDialog({ set, load, setLoad }) {
   };
 
   const handleAdd = () => {
-    let newTask = {
+    let array = {
       task: task,
       deadline: deadline,
     };
-    console.log("Clicked the dialog Add button and the newTask is: ", newTask);
-    addArrayToEnd(newTask, "append");
+    console.log("Clicked the dialog Add button and the newTask is: ", array);
+    // addArrayToEnd(array, "append"); //PREVIOUS METHOD TO UPDATE TASK LISTS USING API
+    setUpdateTasks(array)
     setOpen(false);
-    setLoad(!load);
+
   };
 
   const handleClose = () => {
@@ -40,9 +41,9 @@ export default function FormDialog({ set, load, setLoad }) {
   };
 
   useEffect(() => {
-    setOpen(true);
-    console.log("In UseEffec open is: ", open);
-  }, [set]);
+    setOpen(true)
+    // console.log("In UseEffec open is: ", open);
+  }, [openDialog]);
 
   return (
     <div>
@@ -60,7 +61,6 @@ export default function FormDialog({ set, load, setLoad }) {
             onChange={handleTaskChange}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="deadline"
             label="Deadline"
