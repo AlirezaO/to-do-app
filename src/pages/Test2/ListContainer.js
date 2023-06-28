@@ -97,8 +97,8 @@ function ListContainerTest2({ openDialog }) {
   }, [updateTasks])
 
   useEffect(() => {
-    console.log("Data is: ", typeof(data))
-    // updateTasksInJsonServer(data);
+    console.log("Data is: ", typeof (data))
+    //updateTasksInJsonServer(data);  THIS IS THE API THAT UPDATES THE TASKS LIST IN THE JSON SERVER, BUT THE PUT API ISN'T AVAILABLE APPARENTLY
   }, [data])
 
 
@@ -110,11 +110,11 @@ function ListContainerTest2({ openDialog }) {
       >
         <div >
           <TableContainer sx={{ marginTop: "30px" }} component={Paper}>
-            <Table sx={{ minWidth: "700px" }} stickyHeader aria-label="sticky table">
+            <Table  stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Tasks</StyledTableCell>
-                  <StyledTableCell>Deadline</StyledTableCell>
+
                 </TableRow>
               </TableHead>
 
@@ -124,7 +124,9 @@ function ListContainerTest2({ openDialog }) {
               >
                 <TableBody>
                   {taskNameList.map(task =>
-                    <SortableItem key={task} id={task} data={task} />
+                    <div>
+                      <SortableItem key={task} id={task} data={task} />
+                    </div>
                   )}
                 </TableBody>
               </SortableContext>
