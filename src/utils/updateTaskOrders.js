@@ -1,12 +1,13 @@
 function updateSortOrder(firstArray, secondArray) {
-    const sortedSecondArray = [];
-    for (let i = 0; i < firstArray.length; i++) {
-      const item = firstArray[i];
-      const index = secondArray.findIndex(obj => obj.array.task === item);
-      if (index !== -1) {
-        sortedSecondArray.push(secondArray[index]);
-      }
+  const sortedArray = firstArray.map((item, index) => {
+    const foundItem = secondArray.find(obj => obj.array.task === item);
+    if (foundItem) {
+      return { ...foundItem, id: index };
+    } else {
+      return null;
     }
-    return sortedSecondArray;
-  }
+  });
+
+  return sortedArray.filter(item => item !== null);
+}
 export default updateSortOrder

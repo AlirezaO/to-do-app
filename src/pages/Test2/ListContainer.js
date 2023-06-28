@@ -25,6 +25,7 @@ import axios from "axios"
 import FormDialog from '../../components/Dialog/dialog';
 import { setRef } from '@mui/material';
 import updateSortOrder from '../../utils/updateTaskOrders';
+import updateTasksInJsonServer from '../../api/putAPI';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -58,7 +59,7 @@ function ListContainerTest2({ openDialog }) {
           task.push(item.array.task);
           deadline.push(item.array.deadline);
         })
-        console.log("this: ", t[t.length - 1].id)
+        // console.log("this: ", t[t.length - 1].id)
 
         setTaskNameList(task);
       })
@@ -69,10 +70,10 @@ function ListContainerTest2({ openDialog }) {
   }, []);
 
   useEffect(() => {
-    let firstArray = data
-    updateSortOrder(firstArray, taskNameList)//TEST THIS NOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    console.log(taskNameList)
-
+    let fullData = data
+    fullData = (updateSortOrder(taskNameList, fullData))
+    setData(fullData)
+    console.log("taskNameList: ", taskNameList)
   }, [taskNameList]);
 
   useEffect(() => {
@@ -81,7 +82,7 @@ function ListContainerTest2({ openDialog }) {
       setData([
         ...data,
         {
-          "array": {...updateTasks},
+          "array": { ...updateTasks },
           "id": lastID
         }
       ])
@@ -95,7 +96,10 @@ function ListContainerTest2({ openDialog }) {
 
   }, [updateTasks])
 
-  console.log("Data is: ", data)
+  useEffect(() => {
+    console.log("Data is: ", typeof(data))
+    // updateTasksInJsonServer(data);
+  }, [data])
 
 
   return (
