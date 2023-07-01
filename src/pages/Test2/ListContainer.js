@@ -42,11 +42,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function ListContainerTest2({ openDialog }) {
   const [data, setData] = useState([]);
+  const [deadlineData, setDeadlineData] = useState([]);
   const [taskNameList, setTaskNameList] = useState([]);
-  const [updateTasks, setUpdateTasks] = useState({})
+  const [taskDeadlineList, setTaskDeadlineList] = useState([])
+  const [addTasks, setAddTasks] = useState({})
+  const [removeTasks, setRemoveTasks] = useState("")
+  let x = []
   let task = []
   let deadline = []
-  // let data = null
+
 
   useEffect(() => {
     axios
@@ -54,16 +58,17 @@ function ListContainerTest2({ openDialog }) {
       .then((response) => {
         setData(response.data);
         let t = response.data
-        t.map((item) => {
-
+        t.map((item, index) => {
+          // x.push([item.array.task, item.array.deadline])
           task.push(item.array.task);
           deadline.push(item.array.deadline);
         })
-        // console.log("this: ", t[t.length - 1].id)
 
         setTaskNameList(task);
+        setTaskDeadlineList(deadline)
       })
       .catch((error) => console.log(error))
+
 
     // console.log("CALLED!")
 
@@ -71,10 +76,13 @@ function ListContainerTest2({ openDialog }) {
 
   useEffect(() => {
     let fullData = data
-    fullData = (updateSortOrder(taskNameList, fullData))
-    setData(fullData)
-    console.log("taskNameList: ", taskNameList)
-  }, [taskNameList]);
+    let fullDeadline = deadlineData
+    setData(updateSortOrder(taskNameList, fullData, 1))
+    setDeadlineData(updateSortOrder(taskDeadlineList, fullDeadline, 2))//THIS IS NOT WORKING!?
+    
+    console.log("taskDeadlineList: ", taskDeadlineList, " And taskNameList: ", taskNameList)
+    //console.log("taskNameList: ", taskNameList)
+  }, [taskNameList, taskDeadlineList]);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -82,19 +90,23 @@ function ListContainerTest2({ openDialog }) {
       setData([
         ...data,
         {
-          "array": { ...updateTasks },
+          "array": { ...addTasks },
           "id": lastID
         }
       ])
       setTaskNameList([
         ...taskNameList,
-        updateTasks.task
+        addTasks.task
+      ])
+      setTaskDeadlineList([
+        ...taskDeadlineList,
+        addTasks.deadline
       ])
     }
 
-    console.log("NEW TASK: ", updateTasks)
+    console.log("NEW TASK: ", addTasks)
 
-  }, [updateTasks])
+  }, [addTasks])
 
   useEffect(() => {
     console.log("Data is: ", typeof (data))
@@ -107,11 +119,11 @@ function ListContainerTest2({ openDialog }) {
       <DndContext
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
-        // onDragStart={handleDragStart}
+      // onDragStart={handleDragStart}
       >
         <div >
           <TableContainer sx={{ marginTop: "30px" }} component={Paper}>
-            <Table  stickyHeader aria-label="sticky table">
+            <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Tasks</StyledTableCell>
@@ -123,8 +135,12 @@ function ListContainerTest2({ openDialog }) {
                 items={taskNameList}
                 strategy={verticalListSortingStrategy}
               >
-                <TableBody>
+                <TableBody sx={{
+                  maxWidth: '100%',
+                  overflow: 'hidden'
+                }}>
                   {taskNameList.map(task =>
+                    // console.log(task)
                     <div>
                       <SortableItem key={task} id={task} data={task} />
                     </div>
@@ -136,7 +152,7 @@ function ListContainerTest2({ openDialog }) {
         </div>
       </DndContext>
 
-      <FormDialog openDialog={openDialog} setUpdateTasks={setUpdateTasks} />
+      <FormDialog openDialog={openDialog} setUpdateTasks={setAddTasks} />
     </>
   );
 

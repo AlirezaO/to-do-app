@@ -8,27 +8,6 @@ import { Card } from "react-bootstrap";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#6C63FF",
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: "#e2eafc",
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
-
 export function SortableItem(props) {
   // props.id
   // JavaScript
@@ -44,11 +23,12 @@ export function SortableItem(props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-  
+    maxWidth: "600px"
   }
 
   const handleRemoveIconClick = (event) => {
-    event.stopPropagation();
+
+
     console.log("HI THERE !", props.data)
   }
 
