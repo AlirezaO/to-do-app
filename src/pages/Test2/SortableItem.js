@@ -44,15 +44,22 @@ export function SortableItem(props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    width:"500px"
+  
+  }
+
+  const handleRemoveIconClick = (event) => {
+    event.stopPropagation();
+    console.log("HI THERE !", props.data)
   }
 
   return (
-    <div className="parent-class" ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card body className="m-3">
-        {props.data}
-      </Card>
-      <HighlightOffIcon />
+    <div className="each-task">
+      <div className="parent-class" ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <Card body className="m-2" style={{ width: "500px" }}>
+          {props.data}
+        </Card>
+      </div>
+      <HighlightOffIcon className="remove-icon" onClick={handleRemoveIconClick} />
     </div>
   )
 }

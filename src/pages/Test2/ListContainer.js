@@ -107,6 +107,7 @@ function ListContainerTest2({ openDialog }) {
       <DndContext
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
+        // onDragStart={handleDragStart}
       >
         <div >
           <TableContainer sx={{ marginTop: "30px" }} component={Paper}>
@@ -138,6 +139,10 @@ function ListContainerTest2({ openDialog }) {
       <FormDialog openDialog={openDialog} setUpdateTasks={setUpdateTasks} />
     </>
   );
+
+  // function handleDragStart(event) {
+  //   console.log("Drag Start called");
+  // }
 
   function handleDragEnd(event) {
     console.log("Drag end called");

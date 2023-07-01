@@ -1,3 +1,10 @@
-.parent-class{
-    
+.each-task {
+    display: flex !important;
+    align-items: center;
+}
+
+.remove-icon {
+    cursor: pointer;
+    margin-left: -100px;
+    margin-right: 10px;
 }
