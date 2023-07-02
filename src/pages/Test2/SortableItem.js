@@ -1,17 +1,21 @@
+import { React, useState } from 'react'
+
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+
+import { Card } from "react-bootstrap";
+
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import TableRow from '@mui/material/TableRow';
-import './style.css'
-import { Card } from "react-bootstrap";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import EditIcon from '@mui/icons-material/Edit';
+
+import './style.css'
+
 
 
 export function SortableItem(props) {
-  // props.id
-  // JavaScript
-
   const {
     attributes,
     listeners,
@@ -26,20 +30,54 @@ export function SortableItem(props) {
     maxWidth: "600px"
   }
 
-  const handleRemoveIconClick = (event) => {
+  const [isEditMode, setEditMode] = useState(false);
+  const [editedText, setEditedText] = useState(props.data);
 
-    props.remove(props.data)
-    //console.log("HI THERE !", props.data)
+  const handleRemoveIconClick = (event) => {
+    props.remove(props.data);
+  }
+
+  const handleEditIconClick = (event) => {
+    setEditMode(true);
+  }
+
+  const handleSaveButtonClick = () => {
+    // Save the edited text or perform any other necessary actions
+    props.edit({editedTask:editedText, id:props.ind})
+    console.log("Edited Text:", editedText);
+    setEditMode(false);
+  }
+
+  const handleCancelButtonClick = () => {
+    setEditMode(false);
   }
 
   return (
     <div className="each-task">
       <div className="parent-class" ref={setNodeRef} style={style} {...attributes} {...listeners}>
         <Card body className="m-2" style={{ width: "500px" }}>
-          {props.data}
+          {isEditMode ? (
+            <input
+              type="text"
+              value={editedText}
+              onChange={(e) => setEditedText(e.target.value)}
+            />
+          ) : (
+            <span>{props.data}</span>
+          )}
         </Card>
       </div>
-      <HighlightOffIcon className="remove-icon" onClick={handleRemoveIconClick} />
+      {isEditMode ? (
+        <>
+          <button onClick={handleSaveButtonClick}>Save</button>
+          <button onClick={handleCancelButtonClick}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <EditIcon sx={{ color: "#6C63FF" }} className="side-icons" onClick={handleEditIconClick} />
+          <HighlightOffIcon sx={{ color: "#6C63FF" }} className="side-icons" onClick={handleRemoveIconClick} />
+        </>
+      )}
     </div>
   )
 }

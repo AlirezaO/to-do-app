@@ -47,7 +47,9 @@ function ListContainerTest2({ openDialog }) {
   const [taskDeadlineList, setTaskDeadlineList] = useState([])
   const [addTasks, setAddTasks] = useState({})
   const [removeTasks, setRemoveTasks] = useState("")
-  let x = []
+  const [editTasks, setEditTasks] = useState({ editedTask: "", id: "" })
+
+
   let task = []
   let deadline = []
 
@@ -135,11 +137,20 @@ function ListContainerTest2({ openDialog }) {
     //updateTasksInJsonServer(data);  THIS IS THE API THAT UPDATES THE TASKS LIST IN THE JSON SERVER, BUT THE PUT API ISN'T AVAILABLE APPARENTLY
   }, [data])
 
+  //useEffect for Removing a Task
   useEffect(() => {
     const removingIndex = taskNameList.indexOf(removeTasks)
     setTaskNameList((prev) => prev.filter((item, index) => index !== removingIndex))
     setTaskDeadlineList((prev) => prev.filter((item, index) => index !== removingIndex))
   }, [removeTasks])
+
+  //useEffect for editing a Task
+  useEffect(() => {
+    const editingIndex = editTasks.id
+    console.log("Index to be edited: ", editingIndex) 
+  }, [editTasks])
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//YOU NEED TO WORK ON THE useEffect ABOVE, IT IS ALREADY GETTING THE INDEX AND THE TEXT OF EDITING ITEM, IT JUST HAVE TO UPDATE THE LIST OF TASKS.
 
 
 
@@ -169,15 +180,15 @@ function ListContainerTest2({ openDialog }) {
                   overflow: 'hidden'
                 }}>
                   {taskNameList.length > 0 ?
-                  (taskNameList.map(task => 
-                    <div>
-                      <SortableItem key={task} id={task} data={task} remove={setRemoveTasks} />
-                    </div>
-                  ))
-                  :
-                  (
-                    <h1>EMPTYYYYYY</h1>//CHANGE THIS TO SOMETHING BETTER!!!!
-                  )
+                    (taskNameList.map((task, index) =>
+                      <div>
+                        <SortableItem key={task} id={task} data={task} remove={setRemoveTasks} edit={setEditTasks} ind={index}/>
+                      </div>
+                    ))
+                    :
+                    (
+                      <h1>EMPTYYYYYY</h1>//CHANGE THIS TO SOMETHING BETTER!!!!
+                    )
                   }
                 </TableBody>
               </SortableContext>
