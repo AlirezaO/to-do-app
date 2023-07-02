@@ -10,11 +10,11 @@ function updateSortOrder(firstArray, secondArray, temp) {
         return null;
       }
     })
-  } else {
+  } else if (temp === 2) {
     sortedArray = firstArray.map((item, index) => {
       const foundItem = secondArray.find(obj => obj.array.deadline === item);
       if (foundItem) {
-        // console.log("Here2")
+        console.log("Here2")
         return { ...foundItem, id: index };
       } else {
         return null;

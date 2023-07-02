@@ -28,8 +28,8 @@ export function SortableItem(props) {
 
   const handleRemoveIconClick = (event) => {
 
-
-    console.log("HI THERE !", props.data)
+    props.remove(props.data)
+    //console.log("HI THERE !", props.data)
   }
 
   return (

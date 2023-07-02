@@ -52,6 +52,7 @@ function ListContainerTest2({ openDialog }) {
   let deadline = []
 
 
+  //useEffect for Getting Data at the start of the program
   useEffect(() => {
     axios
       .get('http://localhost:3002/tasks')
@@ -74,19 +75,40 @@ function ListContainerTest2({ openDialog }) {
 
   }, []);
 
+
+  //useEffect for Updating Data
   useEffect(() => {
     let fullData = data
     let fullDeadline = deadlineData
     setData(updateSortOrder(taskNameList, fullData, 1))
-    setDeadlineData(updateSortOrder(taskDeadlineList, fullDeadline, 2))//THIS IS NOT WORKING!?
-    
+    setDeadlineData(updateSortOrder(taskDeadlineList, fullDeadline, 2))
+
     console.log("taskDeadlineList: ", taskDeadlineList, " And taskNameList: ", taskNameList)
     //console.log("taskNameList: ", taskNameList)
   }, [taskNameList, taskDeadlineList]);
 
+  //useEffect for Adding a new Task
   useEffect(() => {
     if (data.length > 0) {
       let lastID = data[data.length - 1].id + 1
+      setData([
+        ...data,
+        {
+          "array": { ...addTasks },
+          "id": lastID
+        }
+      ])
+      setTaskNameList([
+        ...taskNameList,
+        addTasks.task
+      ])
+      setTaskDeadlineList([
+        ...taskDeadlineList,
+        addTasks.deadline
+      ])
+      console.log("in the addTasks useEffect!")
+    } else if (data.length === 0) {
+      let lastID = 0
       setData([
         ...data,
         {
@@ -112,6 +134,13 @@ function ListContainerTest2({ openDialog }) {
     console.log("Data is: ", typeof (data))
     //updateTasksInJsonServer(data);  THIS IS THE API THAT UPDATES THE TASKS LIST IN THE JSON SERVER, BUT THE PUT API ISN'T AVAILABLE APPARENTLY
   }, [data])
+
+  useEffect(() => {
+    const removingIndex = taskNameList.indexOf(removeTasks)
+    setTaskNameList((prev) => prev.filter((item, index) => index !== removingIndex))
+    setTaskDeadlineList((prev) => prev.filter((item, index) => index !== removingIndex))
+  }, [removeTasks])
+
 
 
   return (
@@ -139,12 +168,17 @@ function ListContainerTest2({ openDialog }) {
                   maxWidth: '100%',
                   overflow: 'hidden'
                 }}>
-                  {taskNameList.map(task =>
-                    // console.log(task)
+                  {taskNameList.length > 0 ?
+                  (taskNameList.map(task => 
                     <div>
-                      <SortableItem key={task} id={task} data={task} />
+                      <SortableItem key={task} id={task} data={task} remove={setRemoveTasks} />
                     </div>
-                  )}
+                  ))
+                  :
+                  (
+                    <h1>EMPTYYYYYY</h1>//CHANGE THIS TO SOMETHING BETTER!!!!
+                  )
+                  }
                 </TableBody>
               </SortableContext>
             </Table>
@@ -170,10 +204,8 @@ function ListContainerTest2({ openDialog }) {
       setTaskNameList((items) => {
         const activeIndex = items.indexOf(active.id);
         const overIndex = items.indexOf(over.id);
-        //console.log(arrayMove(items, activeIndex, overIndex));
+        setTaskDeadlineList((i) => arrayMove(i, activeIndex, overIndex))
         return arrayMove(items, activeIndex, overIndex);
-        // items: [2, 3, 1]   0  -> 2
-        // [1, 2, 3] oldIndex: 0 newIndex: 2  -> [2, 3, 1] 
       });
 
     }
