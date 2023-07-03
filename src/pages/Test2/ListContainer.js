@@ -133,7 +133,7 @@ function ListContainerTest2({ openDialog }) {
   }, [addTasks])
 
   useEffect(() => {
-    console.log("Data is: ", typeof (data))
+    //console.log("Data is: ", typeof (data))
     //updateTasksInJsonServer(data);  THIS IS THE API THAT UPDATES THE TASKS LIST IN THE JSON SERVER, BUT THE PUT API ISN'T AVAILABLE APPARENTLY
   }, [data])
 
@@ -146,11 +146,14 @@ function ListContainerTest2({ openDialog }) {
 
   //useEffect for editing a Task
   useEffect(() => {
+    
     const editingIndex = editTasks.id
-    console.log("Index to be edited: ", editingIndex) 
+    const editingText = editTasks.editedTask
+    const newArray = [...taskNameList];
+    newArray[editingIndex] = editingText
+    setTaskNameList(newArray)
+    // console.log(editingText, editingIndex) 
   }, [editTasks])
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//YOU NEED TO WORK ON THE useEffect ABOVE, IT IS ALREADY GETTING THE INDEX AND THE TEXT OF EDITING ITEM, IT JUST HAVE TO UPDATE THE LIST OF TASKS.
 
 
 

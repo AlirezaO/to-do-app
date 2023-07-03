@@ -43,13 +43,17 @@ export function SortableItem(props) {
 
   const handleSaveButtonClick = () => {
     // Save the edited text or perform any other necessary actions
-    props.edit({editedTask:editedText, id:props.ind})
-    console.log("Edited Text:", editedText);
+    props.edit({ editedTask: editedText, id: props.ind })
+    //console.log("Edited Text:", editedText);
     setEditMode(false);
   }
 
   const handleCancelButtonClick = () => {
     setEditMode(false);
+  }
+
+  const handleInputChange = (e) => {
+    setEditedText(e.target.value.trim()); // Trim the input value before updating the state
   }
 
   return (
@@ -60,7 +64,7 @@ export function SortableItem(props) {
             <input
               type="text"
               value={editedText}
-              onChange={(e) => setEditedText(e.target.value)}
+              onChange={handleInputChange}
             />
           ) : (
             <span>{props.data}</span>
