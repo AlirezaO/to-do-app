@@ -43,15 +43,20 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 function ListContainerTest2({ openDialog }) {
   const [data, setData] = useState([]);
   const [deadlineData, setDeadlineData] = useState([]);
+  const [completedData, setCompletedData] = useState([]);
   const [taskNameList, setTaskNameList] = useState([]);
+  const [completedList, setCompletedList] = useState([]);
   const [taskDeadlineList, setTaskDeadlineList] = useState([])
   const [addTasks, setAddTasks] = useState({})
   const [removeTasks, setRemoveTasks] = useState("")
   const [editTasks, setEditTasks] = useState({ editedTask: "", id: "" })
+  const [doneTask, setDoneTask] = useState({ id: "" })
+
 
 
   let task = []
   let deadline = []
+  let completed = []
 
 
   //useEffect for Getting Data at the start of the program
@@ -65,10 +70,12 @@ function ListContainerTest2({ openDialog }) {
           // x.push([item.array.task, item.array.deadline])
           task.push(item.array.task);
           deadline.push(item.array.deadline);
+          completed.push(item.array.completed)
         })
 
         setTaskNameList(task);
         setTaskDeadlineList(deadline)
+        setCompletedList(completed)
       })
       .catch((error) => console.log(error))
 
@@ -82,12 +89,14 @@ function ListContainerTest2({ openDialog }) {
   useEffect(() => {
     let fullData = data
     let fullDeadline = deadlineData
+    let fullComplete = completedData
     setData(updateSortOrder(taskNameList, fullData, 1))
     setDeadlineData(updateSortOrder(taskDeadlineList, fullDeadline, 2))
+    setCompletedData(updateSortOrder(completedList, fullComplete, 3))
 
-    console.log("taskDeadlineList: ", taskDeadlineList, " And taskNameList: ", taskNameList)
+    console.log("taskDeadlineList: ", taskDeadlineList, " And taskNameList: ", taskNameList, " And completedList: ", completedList)
     //console.log("taskNameList: ", taskNameList)
-  }, [taskNameList, taskDeadlineList]);
+  }, [taskNameList]);
 
   //useEffect for Adding a new Task
   useEffect(() => {
@@ -108,6 +117,10 @@ function ListContainerTest2({ openDialog }) {
         ...taskDeadlineList,
         addTasks.deadline
       ])
+      setCompletedList([
+        ...completedList,
+        addTasks.completed
+      ])
       console.log("in the addTasks useEffect!")
     } else if (data.length === 0) {
       let lastID = 0
@@ -126,6 +139,10 @@ function ListContainerTest2({ openDialog }) {
         ...taskDeadlineList,
         addTasks.deadline
       ])
+      setCompletedList([
+        ...completedList,
+        addTasks.completed
+      ])
     }
 
     console.log("NEW TASK: ", addTasks)
@@ -142,11 +159,12 @@ function ListContainerTest2({ openDialog }) {
     const removingIndex = taskNameList.indexOf(removeTasks)
     setTaskNameList((prev) => prev.filter((item, index) => index !== removingIndex))
     setTaskDeadlineList((prev) => prev.filter((item, index) => index !== removingIndex))
+    setCompletedList((prev) => prev.filter((item, index) => index !== removingIndex))
   }, [removeTasks])
 
   //useEffect for editing a Task
   useEffect(() => {
-    
+
     const editingIndex = editTasks.id
     const editingText = editTasks.editedTask
     const newArray = [...taskNameList];
@@ -154,6 +172,17 @@ function ListContainerTest2({ openDialog }) {
     setTaskNameList(newArray)
     // console.log(editingText, editingIndex) 
   }, [editTasks])
+
+
+  //useEffect for completing a Task
+  useEffect(() => {
+
+    const editingIndex = doneTask.id
+    const newArray = [...completedList];
+    newArray[editingIndex] = !completedList[editingIndex]
+    setCompletedList(newArray)
+    // console.log(editingText, editingIndex) 
+  }, [doneTask])
 
 
 
@@ -185,7 +214,7 @@ function ListContainerTest2({ openDialog }) {
                   {taskNameList.length > 0 ?
                     (taskNameList.map((task, index) =>
                       <div>
-                        <SortableItem key={task} id={task} data={task} remove={setRemoveTasks} edit={setEditTasks} ind={index}/>
+                        <SortableItem key={task} id={task} data={task} done={completedList} remove={setRemoveTasks} edit={setEditTasks} setDone={setDoneTask} ind={index} />
                       </div>
                     ))
                     :

@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import TableRow from '@mui/material/TableRow';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import EditIcon from '@mui/icons-material/Edit';
+import Checkbox from '@mui/material/Checkbox';
 
 import './style.css'
 
@@ -32,6 +33,7 @@ export function SortableItem(props) {
 
   const [isEditMode, setEditMode] = useState(false);
   const [editedText, setEditedText] = useState(props.data);
+  const [checked, setChecked] = useState();
 
   const handleRemoveIconClick = (event) => {
     props.remove(props.data);
@@ -52,9 +54,20 @@ export function SortableItem(props) {
     setEditMode(false);
   }
 
-  const handleInputChange = (e) => {
+  const handleEditChange = (e) => {
     setEditedText(e.target.value.trim()); // Trim the input value before updating the state
   }
+
+  const handleCheckChange = (event) => {
+    props.setDone({ id: props.ind })
+    
+  };
+
+
+  useEffect(() => {
+    setChecked(props.done[props.ind])
+  }, [props.done])
+  
 
   return (
     <div className="each-task">
@@ -64,10 +77,10 @@ export function SortableItem(props) {
             <input
               type="text"
               value={editedText}
-              onChange={handleInputChange}
+              onChange={handleEditChange}
             />
           ) : (
-            <span>{props.data}</span>
+            <span style={{textDecoration: checked ? 'line-through': ''}}>{props.data}</span>
           )}
         </Card>
       </div>
@@ -78,6 +91,11 @@ export function SortableItem(props) {
         </>
       ) : (
         <>
+          <Checkbox
+            // checked={checked}
+            onChange={handleCheckChange}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
           <EditIcon sx={{ color: "#6C63FF" }} className="side-icons" onClick={handleEditIconClick} />
           <HighlightOffIcon sx={{ color: "#6C63FF" }} className="side-icons" onClick={handleRemoveIconClick} />
         </>

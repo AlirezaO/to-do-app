@@ -14,7 +14,15 @@ function updateSortOrder(firstArray, secondArray, temp) {
     sortedArray = firstArray.map((item, index) => {
       const foundItem = secondArray.find(obj => obj.array.deadline === item);
       if (foundItem) {
-        console.log("Here2")
+        return { ...foundItem, id: index };
+      } else {
+        return null;
+      }
+    })
+  } else if (temp === 3) {
+    sortedArray = firstArray.map((item, index) => {
+      const foundItem = secondArray.find(obj => obj.id === index);
+      if (foundItem) {
         return { ...foundItem, id: index };
       } else {
         return null;

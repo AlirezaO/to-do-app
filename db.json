@@ -3,35 +3,40 @@
     {
       "array": {
         "task": "First",
-        "deadline": "159"
+        "deadline": "159",
+        "completed": false
       },
       "id": 0
     },
     {
       "array": {
         "task": "Ice cream sandwich",
-        "deadline": "237"
+        "deadline": "237",
+        "completed": false
       },
       "id": 1
     },
     {
       "array": {
         "task": "Eclair",
-        "deadline": "262"
+        "deadline": "262",
+        "completed": false
       },
       "id": 2
     },
     {
       "array": {
         "task": "Cupcake",
-        "deadline": "305"
+        "deadline": "305",
+        "completed": false
       },
       "id": 3
     },
     {
       "array": {
         "task": "Gingerbread",
-        "deadline": "356"
+        "deadline": "356",
+        "completed": false
       },
       "id": 4
     }

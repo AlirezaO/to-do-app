@@ -28,6 +28,7 @@ export default function FormDialog({ openDialog, setUpdateTasks }) {
     let array = {
       task: task,
       deadline: deadline,
+      completed: false
     };
     console.log("Clicked the dialog Add button and the newTask is: ", array);
     // addArrayToEnd(array, "append"); //PREVIOUS METHOD TO UPDATE TASK LISTS USING API
