@@ -2,7 +2,7 @@ function updateSortOrder(firstArray, secondArray, temp) {
   let sortedArray
   if (temp === 1) {
     sortedArray = firstArray.map((item, index) => {
-      const foundItem = secondArray.find(obj => obj.array.task === item);
+      const foundItem = secondArray.find(obj => obj.array.task[0] === item[0]);
       if (foundItem) {
         // console.log("Here1")
         return { ...foundItem, id: index };

@@ -59,14 +59,14 @@ export function SortableItem(props) {
   }
 
   const handleCheckChange = (event) => {
-    props.setDone({ id: props.ind })
+    props.setDone(props.ind)
     
   };
 
 
-  useEffect(() => {
-    setChecked(props.done[props.ind])
-  }, [props.done])
+  // useEffect(() => {
+  //   setChecked(props.done[props.ind])
+  // }, [props.done])
   
 
   return (

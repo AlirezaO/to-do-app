@@ -50,7 +50,7 @@ function ListContainerTest2({ openDialog }) {
   const [addTasks, setAddTasks] = useState({})
   const [removeTasks, setRemoveTasks] = useState("")
   const [editTasks, setEditTasks] = useState({ editedTask: "", id: "" })
-  const [doneTask, setDoneTask] = useState({ id: "" })
+  const [doneIndex, setDoneIndex] = useState()
 
 
 
@@ -70,7 +70,7 @@ function ListContainerTest2({ openDialog }) {
           // x.push([item.array.task, item.array.deadline])
           task.push(item.array.task);
           deadline.push(item.array.deadline);
-          completed.push(item.array.completed)
+          completed.push(item.array.task[1])
         })
 
         setTaskNameList(task);
@@ -156,10 +156,13 @@ function ListContainerTest2({ openDialog }) {
 
   //useEffect for Removing a Task
   useEffect(() => {
-    const removingIndex = taskNameList.indexOf(removeTasks)
-    setTaskNameList((prev) => prev.filter((item, index) => index !== removingIndex))
-    setTaskDeadlineList((prev) => prev.filter((item, index) => index !== removingIndex))
-    setCompletedList((prev) => prev.filter((item, index) => index !== removingIndex))
+    console.log("Handle remove!")
+    // const removingIndex = taskNameList.indexOf(removeTasks)
+    const [resultKey, resultValue, resultIndex] = taskNameList.find(([key]) => key === taskNameList) || [];
+    console.log(resultIndex)// THIS RETURNS UNDEFINED AND NEEDS TO BE FIXED!!!!
+    
+    setTaskNameList((prev) => prev.filter((item, index) => index !== resultIndex))
+    setTaskDeadlineList((prev) => prev.filter((item, index) => index !== resultIndex))
   }, [removeTasks])
 
   //useEffect for editing a Task
@@ -168,8 +171,15 @@ function ListContainerTest2({ openDialog }) {
     const editingIndex = editTasks.id
     const editingText = editTasks.editedTask
     const newArray = [...taskNameList];
-    newArray[editingIndex] = editingText
-    setTaskNameList(newArray)
+    const modifiedArray = newArray.map((item, index) => {
+      if (index === editingIndex) {
+        //console.log(editingText, item[1])
+        return [editingText, item[1]];
+      }
+      return item;
+    });
+    console.log("newArray: ", modifiedArray)
+    setTaskNameList(modifiedArray)
     // console.log(editingText, editingIndex) 
   }, [editTasks])
 
@@ -177,12 +187,18 @@ function ListContainerTest2({ openDialog }) {
   //useEffect for completing a Task
   useEffect(() => {
 
-    const editingIndex = doneTask.id
-    const newArray = [...completedList];
-    newArray[editingIndex] = !completedList[editingIndex]
-    setCompletedList(newArray)
+    const newArray = [...taskNameList];
+    const modifiedArray = newArray.map((item, index) => {
+      if (index === doneIndex) {
+        //console.log(editingText, item[1])
+        return [item[0], !item[1]];
+      }
+      return item;
+    });
+
+    setTaskNameList(modifiedArray)
     // console.log(editingText, editingIndex) 
-  }, [doneTask])
+  }, [doneIndex])
 
 
 
@@ -214,7 +230,16 @@ function ListContainerTest2({ openDialog }) {
                   {taskNameList.length > 0 ?
                     (taskNameList.map((task, index) =>
                       <div>
-                        <SortableItem key={task} id={task} data={task} done={completedList} remove={setRemoveTasks} edit={setEditTasks} setDone={setDoneTask} ind={index} />
+                        <SortableItem 
+                          key={task} 
+                          id={task} 
+                          data={task[0]} 
+                          done={completedList} 
+                          remove={setRemoveTasks} 
+                          edit={setEditTasks} 
+                          setDone={setDoneIndex} 
+                          ind={index} 
+                        />
                       </div>
                     ))
                     :
