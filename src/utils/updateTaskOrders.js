@@ -1,4 +1,5 @@
 function updateSortOrder(firstArray, secondArray, temp) {
+  console.log("completedList: ", firstArray, " and fullComplete: ", secondArray)
   let sortedArray
   if (temp === 1) {
     sortedArray = firstArray.map((item, index) => {

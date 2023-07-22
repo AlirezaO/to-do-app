@@ -50,7 +50,7 @@ function ListContainerTest2({ openDialog }) {
   const [addTasks, setAddTasks] = useState({})
   const [removeTasks, setRemoveTasks] = useState("")
   const [editTasks, setEditTasks] = useState({ editedTask: "", id: "" })
-  const [doneIndex, setDoneIndex] = useState()
+  const [doneStatus, setDoneStatus] = useState({index:"", done:false})
 
 
 
@@ -92,7 +92,7 @@ function ListContainerTest2({ openDialog }) {
     let fullComplete = completedData
     setData(updateSortOrder(taskNameList, fullData, 1))
     setDeadlineData(updateSortOrder(taskDeadlineList, fullDeadline, 2))
-    setCompletedData(updateSortOrder(completedList, fullComplete, 3))
+    //setCompletedData(updateSortOrder(completedList, fullComplete, 3))
 
     console.log("taskDeadlineList: ", taskDeadlineList, " And taskNameList: ", taskNameList, " And completedList: ", completedList)
     //console.log("taskNameList: ", taskNameList)
@@ -156,10 +156,9 @@ function ListContainerTest2({ openDialog }) {
 
   //useEffect for Removing a Task
   useEffect(() => {
-    console.log("Handle remove!")
     // const removingIndex = taskNameList.indexOf(removeTasks)
     const [resultKey, resultValue, resultIndex] = taskNameList.find(([key]) => key === taskNameList) || [];
-    console.log(resultIndex)// THIS RETURNS UNDEFINED AND NEEDS TO BE FIXED!!!!
+    //console.log(resultIndex)// THIS RETURNS UNDEFINED AND NEEDS TO BE FIXED!!!!
     
     setTaskNameList((prev) => prev.filter((item, index) => index !== resultIndex))
     setTaskDeadlineList((prev) => prev.filter((item, index) => index !== resultIndex))
@@ -178,7 +177,7 @@ function ListContainerTest2({ openDialog }) {
       }
       return item;
     });
-    console.log("newArray: ", modifiedArray)
+    //console.log("newArray: ", modifiedArray)
     setTaskNameList(modifiedArray)
     // console.log(editingText, editingIndex) 
   }, [editTasks])
@@ -186,19 +185,18 @@ function ListContainerTest2({ openDialog }) {
 
   //useEffect for completing a Task
   useEffect(() => {
-
+    console.log("This is Done Status: ", doneStatus)
     const newArray = [...taskNameList];
     const modifiedArray = newArray.map((item, index) => {
-      if (index === doneIndex) {
-        //console.log(editingText, item[1])
-        return [item[0], !item[1]];
+      if (index === doneStatus.index) {
+        return [item[0], doneStatus.done];
       }
       return item;
     });
 
     setTaskNameList(modifiedArray)
-    // console.log(editingText, editingIndex) 
-  }, [doneIndex])
+    //console.log("This is modifiedArray: ", modifiedArray)
+  }, [doneStatus])
 
 
 
@@ -237,7 +235,8 @@ function ListContainerTest2({ openDialog }) {
                           done={completedList} 
                           remove={setRemoveTasks} 
                           edit={setEditTasks} 
-                          setDone={setDoneIndex} 
+                          setDoneStatus={setDoneStatus} 
+                          doneStatus={doneStatus}
                           ind={index} 
                         />
                       </div>
